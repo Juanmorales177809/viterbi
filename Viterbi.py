@@ -16,6 +16,7 @@ class Viterbi:
         self.probabilidades[0, :] = np.log2(self.probabilidad_inicial * self.emision[:, self.observaciones[0]])  # Caso base
         self.matriz = np.zeros((self.filas - 1, self.filas_transicion))
         self.estados_probables = np.zeros(self.filas)
+        self.estados = [] #Lista vacia que va a contener los estados 
         
     def values(self):
         for i in range(1,self.filas):
@@ -47,7 +48,20 @@ class Viterbi:
         print('La matriz que contiene los valores de probabilidad mas probables: ', '\n', np.transpose(self.probabilidades),'\n')   
 # Invierto la matriz que contiene la ubicacion del camino de los estados mas probable (Como arranque del último al primero)
         E = np.flip(E, axis=0)
+        for s in E:
+            if s == 0:  #Como ya conozco la posicion de los estados mas probables les asigno la letra que denota los estados y los agrego a la lista
+                self.estados.append("H")
+            else:
+                self.estados.append("L")
         
+        print('El camino más probable es: ', self.estados,'\n') 
+
+
+#La probabilidad de que la secuencia S haya sido generada por el modelo HMM
+
+        probabilidad = 2**(self.probabilidades[self.filas-1, 0] + self.probabilidades[self.filas-1, 1])
+
+        print('La probabilidad de que la secuencia S haya sido generada por el modelo HMM es : ', probabilidad)
    
 
 if "__main__" == __name__:
