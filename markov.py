@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-from math import log2
 
 
 
@@ -16,6 +15,7 @@ class Markov:
         self.P = []
         self.probabilidad_secuencia = 0
         self.probabilidad_maxima = []
+    
     def forward(self):
         ph = self.inicial*self.estados["H"][self.secuencia[0]]
         pl = self.inicial*self.estados["L"][self.secuencia[0]]
@@ -23,40 +23,29 @@ class Markov:
         self.observaciones(ph,pl)
         self.probabilidad_maxima.append(max(ph,pl))
         for i in range(1,self.longitud_secuencia):
-            ph = self.viterbi(i)
-            self.probabilidad_maxima.append(max(self.probabilidad[i-1][0]*self.paso_estado["HH"]*self.estados["H"][self.secuencia[i]], \
-                self.probabilidad[i-1][1]*self.paso_estado["LH"]*self.estados["H"][self.secuencia[i]]))
-            pl = self.viterbi()
-            self.probabilidad_maxima.append(max(self.probabilidad[i-1][0]*self.paso_estado["HL"]*self.estados["L"][self.secuencia[i]], \
-                self.probabilidad[i-1][1]*self.paso_estado["LL"]*self.estados["L"][self.secuencia[i]]))
-            
+            ph, pl = self.viterbi(i)
             self.probabilidad.append([ph,pl])
             self.observaciones(ph,pl)
         print(self.probabilidad)
         print(self.P)
         self.probabilidad_secuencia = sum(self.probabilidad[self.longitud_secuencia-1][j] for j in range(len(self.estados)))
         print("La probabilidad de la secuencia es: ", self.probabilidad_secuencia)
-        print(sum(self.probabilidad_maxima))
+        
     def viterbi(self,i):
         ph = self.probabilidad[i-1][0]*self.paso_estado["HH"]*self.estados["H"][self.secuencia[i]] \
                 +self.probabilidad[i-1][1]*self.paso_estado["LH"]*self.estados["H"][self.secuencia[i]]
         pl = self.probabilidad[i-1][0]*self.paso_estado["HL"]*self.estados["L"][self.secuencia[i]] \
                 +self.probabilidad[i-1][1]*self.paso_estado["LL"]*self.estados["L"][self.secuencia[i]]
         return ph ,pl
+    
     def observaciones(self,ph,pl):
         if ph > pl:
             self.P.append("H")
             
         else:
             self.P.append("L")
-            
-
+    
 if "__main__" == __name__:
-    secuencia =  "GGCACTGAA"
+    secuencia =  "GGCA"
     forward = Markov(secuencia)
     forward.forward()
-
-    
-
-
-        
