@@ -11,7 +11,7 @@
 
 
 
-### *Development for the scientific programming course Metropolitan Technological Institute*
+### *Development for the scientific programming course of the Metropolitan Technological Institute ITM*
 
 
 
