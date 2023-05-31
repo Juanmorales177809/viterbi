@@ -2,9 +2,6 @@ import pandas as pd
 import numpy as np
 
 
-
-
-
 class Markov_log2:
     def __init__(self, secuencia):
         self.estados = {"H": {"A":-2.322 ,"C": -1.737,"G": -1.737 ,"T": -2.322},
@@ -57,6 +54,7 @@ class Markov_log2:
         self.probabilidad_secuencia = max(self.probabilidad[self.longitud_secuencia-1])
         print("La probabilidad de la secuencia es: ", 2**self.probabilidad_secuencia)
 
+        
 if "__main__" == __name__:
     secuencia =  "GGCACTGAA"
     forward = Markov_log2(secuencia)
