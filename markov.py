@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 
 
-
 class Markov:
     def __init__(self, secuencia):
         self.estados = {"H": {"A":0.2 ,"C": 0.3,"G": 0.3 ,"T": 0.2},
@@ -44,7 +43,8 @@ class Markov:
             
         else:
             self.P.append("L")
-    
+ 
+
 if "__main__" == __name__:
     secuencia =  "GGCA"
     forward = Markov(secuencia)
